@@ -24,17 +24,14 @@ function onFormSubmit(e) {
   const { email, message } = e.currentTarget.elements;
 
   if (email.value === '' || message.value === '') {
-    return console.log('Будь ласка заповнити усі поля');
+    return alert('Будь ласка заповнити усі поля');
   }
 
   console.log(formData);
 
   e.currentTarget.reset();
 
-  //   const obj = localStorage.getItem(FORM_STORAGE_KEY);
   localStorage.removeItem(FORM_STORAGE_KEY);
-  //   validation();
-  //   JSON.parse(obj);
 }
 
 function populateFormFields() {
@@ -54,26 +51,3 @@ function populateFormFields() {
       : '';
   }
 }
-
-// function validation() {
-//   if (!formData['email'] || !formData['message']) {
-//     return alert('Будь ласка, заповніть форму');
-//   }
-//   return console.log(formData);
-// }
-
-// function getStorageData() {
-//   const parcedData = JSON.parse(localStorage.getItem(FORM_STORAGE_KEY));
-//   if (parcedData) {
-//     console.log(parcedData);
-//     setFormFields(parcedData);
-//   }
-// }
-
-// function setFormFields(obj) {
-//   for (const key in obj) {
-//     refs.form[key].value = obj[key];
-//   }
-// }
-
-// window.addEventListener('load', getStorageData);
