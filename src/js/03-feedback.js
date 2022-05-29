@@ -51,7 +51,7 @@ function validation() {
   if (!formData['email'] || !formData['message']) {
     return alert('Будь ласка, заповніть форму');
   }
-  return;
+  return console.log(formData);
 }
 
 // function getStorageData() {
