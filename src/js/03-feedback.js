@@ -21,7 +21,7 @@ function onFormSubmit(e) {
   localStorage.removeItem(FORM_STORAGE_KEY);
   validation();
 
-  console.log(JSON.parse(obj));
+  JSON.parse(obj);
 }
 
 function addFormFields(e) {
@@ -51,7 +51,7 @@ function validation() {
   if (!formData['email'] || !formData['message']) {
     return alert('Будь ласка, заповніть форму');
   }
-  return console.log(formData);
+  return;
 }
 
 // function getStorageData() {
