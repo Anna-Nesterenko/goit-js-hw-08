@@ -13,20 +13,28 @@ populateFormFields();
 refs.form.addEventListener('submit', onFormSubmit);
 refs.form.addEventListener('input', throttle(addFormFields, 500));
 
-function onFormSubmit(e) {
-  e.preventDefault();
-
-  e.currentTarget.reset();
-  const obj = localStorage.getItem(FORM_STORAGE_KEY);
-  localStorage.removeItem(FORM_STORAGE_KEY);
-  validation();
-
-  JSON.parse(obj);
-}
-
 function addFormFields(e) {
   formData[e.target.name] = e.target.value;
   localStorage.setItem(FORM_STORAGE_KEY, JSON.stringify(formData));
+}
+
+function onFormSubmit(e) {
+  e.preventDefault();
+
+  const { email, message } = e.currentTarget.elements;
+
+  if (email.value === '' || message.value === '') {
+    return console.log('Будь ласка заповнити усі поля');
+  }
+
+  console.log(formData);
+
+  e.currentTarget.reset();
+
+  //   const obj = localStorage.getItem(FORM_STORAGE_KEY);
+  localStorage.removeItem(FORM_STORAGE_KEY);
+  //   validation();
+  //   JSON.parse(obj);
 }
 
 function populateFormFields() {
@@ -47,12 +55,12 @@ function populateFormFields() {
   }
 }
 
-function validation() {
-  if (!formData['email'] || !formData['message']) {
-    return alert('Будь ласка, заповніть форму');
-  }
-  return console.log(formData);
-}
+// function validation() {
+//   if (!formData['email'] || !formData['message']) {
+//     return alert('Будь ласка, заповніть форму');
+//   }
+//   return console.log(formData);
+// }
 
 // function getStorageData() {
 //   const parcedData = JSON.parse(localStorage.getItem(FORM_STORAGE_KEY));
