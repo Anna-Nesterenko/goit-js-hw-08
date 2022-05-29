@@ -19,6 +19,7 @@ function onFormSubmit(e) {
   e.currentTarget.reset();
   const obj = localStorage.getItem(FORM_STORAGE_KEY);
   localStorage.removeItem(FORM_STORAGE_KEY);
+  validation();
 
   console.log(JSON.parse(obj));
 }
@@ -44,6 +45,13 @@ function populateFormFields() {
       ? formData['message']
       : '';
   }
+}
+
+function validation() {
+  if (!formData['email'] || !formData['message']) {
+    return alert('Будь ласка, заповніть форму');
+  }
+  return console.log(formData);
 }
 
 // function getStorageData() {
