@@ -8,12 +8,12 @@ const FORM_STORAGE_KEY = 'feedback-form-state';
 
 const formData = {};
 
-populateFormFields();
+populateFormInput();
 
 refs.form.addEventListener('submit', onFormSubmit);
-refs.form.addEventListener('input', throttle(addFormFields, 500));
+refs.form.addEventListener('input', throttle(addFormInput, 500));
 
-function addFormFields(e) {
+function addFormInput(e) {
   formData[e.target.name] = e.target.value;
   localStorage.setItem(FORM_STORAGE_KEY, JSON.stringify(formData));
 }
@@ -29,12 +29,12 @@ function onFormSubmit(e) {
 
   console.log(formData);
 
-  e.currentTarget.reset();
+  refs.form.reset();
 
   localStorage.removeItem(FORM_STORAGE_KEY);
 }
 
-function populateFormFields() {
+function populateFormInput() {
   const formStringValue = localStorage.getItem(FORM_STORAGE_KEY);
 
   if (formStringValue) {
