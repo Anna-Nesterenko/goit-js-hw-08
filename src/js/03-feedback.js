@@ -6,17 +6,10 @@ const refs = {
 
 const FORM_STORAGE_KEY = 'feedback-form-state';
 
-const formData = {};
-
-populateFormInput();
+let formData;
 
 refs.form.addEventListener('submit', onFormSubmit);
 refs.form.addEventListener('input', throttle(addFormInput, 500));
-
-function addFormInput(e) {
-  formData[e.target.name] = e.target.value;
-  localStorage.setItem(FORM_STORAGE_KEY, JSON.stringify(formData));
-}
 
 function onFormSubmit(e) {
   e.preventDefault();
@@ -27,27 +20,36 @@ function onFormSubmit(e) {
     return alert('Будь ласка заповнити усі поля');
   }
 
-  console.log(formData);
-
-  refs.form.reset();
-
   localStorage.removeItem(FORM_STORAGE_KEY);
+  console.log(formData);
+  e.currentTarget.reset();
+  clearFormData(formData);
 }
 
-function populateFormInput() {
-  const formStringValue = localStorage.getItem(FORM_STORAGE_KEY);
-
-  if (formStringValue) {
-    const formObjectValue = JSON.parse(formStringValue);
-
-    for (const key in formObjectValue) {
-      formData[key] = formObjectValue[key];
-    }
-
-    refs.form.elements.email.value = formData.email ? formData['email'] : '';
-
-    refs.form.elements.message.value = formData.message
-      ? formData['message']
-      : '';
+function clearFormData(obj) {
+  for (const key in obj) {
+    delete obj[key];
   }
 }
+
+function addFormInput(e) {
+  formData[e.target.name] = e.target.value;
+  localStorage.setItem(FORM_STORAGE_KEY, JSON.stringify(formData));
+}
+
+function getStorageData() {
+  formData = JSON.parse(localStorage.getItem(FORM_STORAGE_KEY));
+  if (formData) {
+    setFormFields(formData);
+  } else {
+    formData = {};
+  }
+}
+
+function setFormFields(obj) {
+  for (const key in obj) {
+    refs.form[key].value = obj[key];
+  }
+}
+
+window.addEventListener('load', getStorageData);
